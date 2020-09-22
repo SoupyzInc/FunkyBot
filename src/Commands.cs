@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Linq;
 
-//Discod.NET
+//Discod.Net
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
