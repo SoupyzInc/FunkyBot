@@ -1,0 +1,5 @@
+/bin
+/obj
+/WikiImages
+*.md
+*.json
