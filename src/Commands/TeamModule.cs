@@ -14,7 +14,7 @@ public class TeamModule : ModuleBase<SocketCommandContext>
     [Command("Team")]
     public async Task Team(params IUser[] usersToExclude)
     {
-        DiscordSocketClient targetClient = Context.Client; //Gets the reference to the dude who said the message
+        DiscordSocketClient targetClient = Context.Client; //Gets the context of the client
         IVoiceChannel userChannel = (Context.User as IVoiceState).VoiceChannel; //Gives reference to the users voice channel
 
         //User Not In VC Error Handler
@@ -46,7 +46,7 @@ public class TeamModule : ModuleBase<SocketCommandContext>
         }
         finally
         {
-            var voiceUsers = Context.Guild.GetVoiceChannel(userChannel.Id).Users; //Grabs all the people in the vc
+            var voiceUsers = Context.Guild.GetVoiceChannel(userChannel.Id).Users; //Grabs all users in the vc
             List<SocketGuildUser> usersInChannel = voiceUsers.ToList(); //Puts them in a list
 
             List<SocketGuildUser> usersToParse = new List<SocketGuildUser>();
@@ -74,39 +74,40 @@ public class TeamModule : ModuleBase<SocketCommandContext>
 
             //Team Creation
             Random rnd = new Random();
-            List<SocketGuildUser> sortedUsers = usersToTeam.OrderBy(x => rnd.Next()).ToList(); //Randomly sorts users
+            List<SocketGuildUser> sortedUsers = usersToTeam.OrderBy(x => rnd.Next()).ToList(); //Randomly sorts players
 
-            List<SocketGuildUser> blueTeam = new List<SocketGuildUser>(); //Generate a blue team
-            List<SocketGuildUser> redTeam = new List<SocketGuildUser>(); //Generate a red team
+            List<SocketGuildUser> blueTeam = new List<SocketGuildUser>();
+            List<SocketGuildUser> redTeam = new List<SocketGuildUser>();
 
-            List<string> blueTeamUsers = new List<string>(); //Make a list of all blue team players
-            List<string> redTeamUsers = new List<string>(); //Make a list of all red team players
+            List<string> blueTeamUsers = new List<string>();
+            List<string> redTeamUsers = new List<string>();
 
-            for (int i = 0; i < (sortedUsers.Count / 2); i++) //Add half the players to red team
+            for (int i = 0; i < (sortedUsers.Count / 2); i++) //Add half of the players to the red team
             {
                 redTeam.Add(sortedUsers[i]);
                 redTeamUsers.Add(sortedUsers[i].Id.ToString()); //Adds the red team players to the red list
             }
 
-            blueTeam = sortedUsers.Except(redTeam).ToList(); //Add the other half to blue team
+            blueTeam = sortedUsers.Except(redTeam).ToList(); //Add the rest of the players to the blue team
 
             for (int i = 0; i < blueTeam.Count; i++)
             {
                 blueTeamUsers.Add(blueTeam[i].Id.ToString()); //Adds the blue team players to the blue list
             }
 
-            string blueText = string.Join(">, <@", blueTeamUsers.ToArray()); //Combines blue string array into a long string
-            string redText = string.Join(">, <@", redTeamUsers.ToArray()); //Combines red string array into a long string
+            string blueText = string.Join(">, <@", blueTeamUsers.ToArray()); //Adds mention syntax for the blue team
+            string redText = string.Join(">, <@", redTeamUsers.ToArray()); //Adds mention syntax for the read team
 
             string redMessage = "";
             string blueMessage = "";
 
-            if (!string.IsNullOrWhiteSpace(redText))
+            
+            if (!string.IsNullOrWhiteSpace(redText)) //Prevents the sending of empty messages for the red team
             {
                 redMessage = "<@" + redText + "> ";
             }
 
-            if (!string.IsNullOrWhiteSpace(blueText))
+            if (!string.IsNullOrWhiteSpace(blueText)) //Prevents the sending of empty messages for the blue team
             {
                 blueMessage = "<@" + blueText + "> ";
             }
