@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 
-//Discod.NET
+//Discod.Net
 using Discord;
 using Discord.Commands;
 
