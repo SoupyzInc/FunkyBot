@@ -20,7 +20,7 @@ public class TeamModule : ModuleBase<SocketCommandContext>
         //User Not In VC Error Handler
         try
         {
-            var voiceUsers = Context.Guild.GetVoiceChannel(userChannel.Id).Users; //grabs all the people in the vc
+            var voiceUsers = Context.Guild.GetVoiceChannel(userChannel.Id).Users; //Attempts to grab all people in vc
         }
         catch
         {
@@ -46,7 +46,7 @@ public class TeamModule : ModuleBase<SocketCommandContext>
         }
         finally
         {
-            var voiceUsers = Context.Guild.GetVoiceChannel(userChannel.Id).Users; //grabs all the people in the vc
+            var voiceUsers = Context.Guild.GetVoiceChannel(userChannel.Id).Users; //Grabs all the people in the vc
             List<SocketGuildUser> usersInChannel = voiceUsers.ToList(); //Puts them in a list
 
             List<SocketGuildUser> usersToParse = new List<SocketGuildUser>();
