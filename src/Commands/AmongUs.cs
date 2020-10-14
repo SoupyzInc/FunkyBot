@@ -96,7 +96,7 @@ public class AmongUsMoudle : ModuleBase<SocketCommandContext>
         }
     }
 
-    [Command("unmute", RunMode = RunMode.Async)]
+    [Command("unmute", RunMode = RunMode.Async)] //Allows for the method to run on a thread different from the gateway
     public async Task Unmute(params IUser[] deadPersonsGiven)
     {
         IVoiceChannel userChannel = (Context.User as IVoiceState).VoiceChannel; //Gives reference to the users voice channel
@@ -154,7 +154,7 @@ public class AmongUsMoudle : ModuleBase<SocketCommandContext>
         }
     }
 
-    [Command("mute", RunMode = RunMode.Async)]
+    [Command("mute", RunMode = RunMode.Async)] //Allows for the method to run on a thread different from the gateway
     public async Task NewMute()
     {
         IVoiceChannel userChannel = (Context.User as IVoiceState).VoiceChannel; //Gives reference to the users voice channel
